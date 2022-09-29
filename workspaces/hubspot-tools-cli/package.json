@@ -1,0 +1,29 @@
+{
+  "name": "@resultify/hubspot-tools-cli",
+  "version": "0.0.1",
+  "description": "",
+  "repository": {},
+  "keywords": [],
+  "license": "MIT",
+  "files": [
+    "bin/",
+    "lib/"
+  ],
+  "bin": {
+    "rh": "bin/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "standard -v 'lib/**/*.js'"
+  },
+  "dependencies": {
+    "@resultify/hubspot-tools-lib": "*"
+  },
+  "devDependencies": {
+    "standard": "~17.0.0"
+  },
+  "engines": {
+    "node": ">=16.13.0",
+    "npm": ">=8.1.0"
+  }
+}

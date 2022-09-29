@@ -1,0 +1,12 @@
+{
+  "name": "hubspot-tools",
+  "version": "0.0.1",
+  "description": "Hubspot tools",
+  "workspaces": [
+    "workspaces/*"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "test": "npm run lint -ws"
+  }
+}
