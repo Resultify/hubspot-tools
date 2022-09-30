@@ -6,9 +6,12 @@ import { globals } from '../config/globals.js'
 import * as utils from '../utils/utils.js'
 
 /**
- * @summary clean all Assets/tmp folders
+ * @summary clean all assets/tmp folders
+ * @since 0.0.1
  * @async
  * @returns undefined
+ * @example
+ * await cleanAssets()
  */
 async function cleanAssets () {
   try {

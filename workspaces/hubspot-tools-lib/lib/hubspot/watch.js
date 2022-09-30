@@ -14,7 +14,7 @@ if (process.env.MODE === 'draft') {
  * @summary watch and upload all HubSpot theme files
  * @since 0.0.1
  * @async
- * @param {AUTH_CONFIG|boolean} customAuthConfig - Nimbly custom Hubspot authentication
+ * @param {AUTH_CONFIG|string} customAuthConfig - Rusultify custom Hubspot authentication
  * @returns undefined
  * @example
  * await watchHubspotTheme()

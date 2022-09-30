@@ -29,7 +29,6 @@ function checkNode () {
  * @since 0.0.1
  * @returns undefined
  * @throws console.error & process.exit(1) if package.json[name] != theme.json[label]
- * @memberof command
  * @example
  * import { checkPackageThemeConsistent } from './check.js'
  * checkPackageThemeConsistent()

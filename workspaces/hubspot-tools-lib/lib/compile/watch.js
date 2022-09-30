@@ -19,17 +19,17 @@ async function watchSrc () {
   try {
     chokidar.watch([`${globals.CSS_SRC}/**/*.css`, `${globals.TMP}/*.css`], { ignoreInitial: true, awaitWriteFinish: false }).on('all', (event, path) => {
       console.log(`${chalk.red(event)} ${path}`)
-      compileCss({ options: { hideStatus: true } })
+      compileCss({ hideStatus: true })
     })
 
     chokidar.watch([`${globals.JS_SRC}/**/*.js`, `${globals.TMP}/*.js`], { ignoreInitial: true, awaitWriteFinish: false }).on('all', (event, path) => {
       console.log(`${chalk.red(event)} ${path}`)
-      compileJs({ options: { hideStatus: true } })
+      compileJs({ hideStatus: true })
     })
 
     chokidar.watch(`${globals.SCSS_SRC}/**/*.scss`, { ignoreInitial: true }).on('all', (event, path) => {
       console.log(`${chalk.red(event)} ${path}`)
-      compileScss({ options: { hideStatus: true } })
+      compileScss({ hideStatus: true })
     })
   } catch (error) {
     console.error(error)

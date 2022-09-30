@@ -3,6 +3,7 @@
 import uploadFolder from '@hubspot/cli-lib/lib/uploadFolder.js'
 import fileMapper from '@hubspot/cli-lib/api/fileMapper.js'
 import logger from '@hubspot/cli-lib/logger.js'
+import chalk from 'chalk'
 import { globals } from '../config/globals.js'
 import * as utils from '../utils/utils.js'
 import { loadAuthConfig } from './auth.js'
@@ -16,7 +17,7 @@ if (process.env.MODE === 'draft') {
  * @summary upload all HubSpot theme files
  * @since 0.0.1
  * @async
- * @param {AUTH_CONFIG|boolean} customAuthConfig - Nimbly custom Hubspot authentication
+ * @param {AUTH_CONFIG|string} customAuthConfig - Rusultify custom Hubspot authentication
  * @returns undefined
  * @example
  * await uploadTheme()
@@ -26,7 +27,7 @@ async function uploadTheme (customAuthConfig) {
     const timeStart = utils.startTask('uploadTheme')
     const hubconf = await loadAuthConfig(customAuthConfig)
     const portalId = hubconf.portals[0].portalId
-    console.log(`Uploading theme ${globals.THEME_NAME}`)
+    console.log(`Uploading theme ${chalk.yellow(globals.THEME_NAME)}`)
     try {
       const dirContents = await fileMapper.getDirectoryContentsByPath(portalId, '/')
       for (const iterator of dirContents.children) {

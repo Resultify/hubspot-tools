@@ -5,12 +5,13 @@ import postcss from 'postcss'
 import cssimport from 'postcss-import'
 import { globals } from '../config/globals.js'
 import * as utils from '../utils/utils.js'
+import { getFileList } from '../utils/fs.js'
 
 /**
  * @summary Compile Css
  * @since 0.0.1
  * @async
- * @param {OPTIONS} [opt] - options
+ * @param {BUILD_OPTIONS} [opt] - options
  * @returns undefined
  * @example
  * await compileCss()
@@ -19,13 +20,13 @@ async function compileCss (opt) {
   try {
     const cssDist = globals.CSS_DIST
 
-    const hideStatus = opt?.options?.hideStatus
+    const hideStatus = opt?.hideStatus
 
     const timeStart = utils.startTask('compileCss')
     const fileList = []
 
     await fsPromises.mkdir(cssDist, { recursive: true })
-    const files = await utils.getFileList(`${globals.CSS_SRC}/*.css`, { objectMode: true })
+    const files = await getFileList(`${globals.CSS_SRC}/*.css`, { objectMode: true })
 
     for await (const file of files) {
       const css = await fsPromises.readFile(file.path)

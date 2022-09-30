@@ -1,8 +1,9 @@
 import { checkNode, checkPackageThemeConsistent } from '../check.js'
 import { fetchAll } from '../hubspot/fetch.js'
-import { getCustomAuthConfig } from '../hubspot/auth.js'
+import { getAuthConfig } from '../hubspot/auth.js'
 import { globals } from '../config/globals.js'
 import * as utils from '../utils/utils.js'
+import { confirmThemeName } from '../hubspot/utils/utils.js'
 checkNode()
 checkPackageThemeConsistent()
 
@@ -13,13 +14,13 @@ checkPackageThemeConsistent()
  * @memberof Commands
  * @returns undefined
  * @example
- * node build/fetch.js
+ * node build/fetchAll.js
  */
 async function hubspotFetchAll () {
-  await utils.confirmThemeName()
-  const auth = await getCustomAuthConfig()
+  await confirmThemeName()
+  const hubAuth = await getAuthConfig()
   const timeStart = utils.startTaskGroup(`Fetch all from ${globals.THEME_NAME}`)
-  await fetchAll(auth)
+  await fetchAll(hubAuth)
   utils.endTaskGroup({ taskName: `Fetch all from ${globals.THEME_NAME}`, timeStart })
 }
 

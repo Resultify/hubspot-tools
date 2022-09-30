@@ -7,19 +7,20 @@ import replace from '@rollup/plugin-replace'
 import sizes from 'rollup-plugin-sizes'
 import { globals } from '../config/globals.js'
 import * as utils from '../utils/utils.js'
+import { getFileList } from '../utils/fs.js'
 
 /**
  * @summary Compile Js task
  * @since 0.0.1
  * @async
- * @param {OPTIONS} [opt] - task options
+ * @param {BUILD_OPTIONS} [opt] - task options
  * @returns undefined
  * @example
  * await compileJs()
  */
 async function compileJs (opt) {
   try {
-    const hideStatus = opt?.options?.hideStatus
+    const hideStatus = opt?.hideStatus
 
     const timeStart = utils.startTask('compileJs')
     const fileList = []
@@ -31,7 +32,7 @@ async function compileJs (opt) {
     replaceVal = { ...replaceVal, ...opt.config.js.replace }
 
     await fsPromises.mkdir(globals.JS_DIST, { recursive: true })
-    const files = await utils.getFileList(`${globals.JS_SRC}/*.js`, { objectMode: true })
+    const files = await getFileList(`${globals.JS_SRC}/*.js`, { objectMode: true })
 
     for await (const file of files) {
       const inputOptions = {

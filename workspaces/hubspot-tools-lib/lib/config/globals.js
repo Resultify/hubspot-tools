@@ -17,6 +17,8 @@ const require = createRequire(import.meta.url)
  * @property {string} [SCSS_SRC]
  * @property {string} [JS_SRC]
  * @property {string} [JS_DIST]
+ * @property {string} [DOTENV]
+ * @property {string} [DOTENV_DATA_TMPL]
  */
 
 /**
@@ -49,5 +51,11 @@ globals.SCSS_SRC = `${globals.SRC}/scss`
 // JS compilation variables
 globals.JS_SRC = `${globals.SRC}/js`
 globals.JS_DIST = `${globals.THEME_ASSETS}/js`
+
+// .env file and data template
+globals.DOTENV = '.env'
+globals.DOTENV_DATA_TMPL = `hub_sandbox=personalaccesskey
+hub_portal1=personalaccesskey1
+`
 
 export { globals }

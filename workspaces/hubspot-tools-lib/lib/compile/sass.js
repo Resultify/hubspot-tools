@@ -5,25 +5,26 @@ import { pathToFileURL } from 'url'
 import sass from 'sass'
 import { globals } from '../config/globals.js'
 import * as utils from '../utils/utils.js'
+import { getFileList } from '../utils/fs.js'
 
 /**
  * @summary Compile Scss task
  * @since 0.0.1
  * @async
- * @param {OPTIONS} [opt] - options
+ * @param {BUILD_OPTIONS} [opt] - options
  * @returns undefined
  * @example
  * await compileScss()
  */
 async function compileScss (opt) {
-  const hideStatus = opt?.options?.hideStatus
+  const hideStatus = opt?.hideStatus
 
   try {
     const timeStart = utils.startTask('compileScss')
     const fileList = []
 
     await fsPromises.mkdir(globals.TMP, { recursive: true })
-    const files = await utils.getFileList(`${globals.SCSS_SRC}/*.scss`, { objectMode: true })
+    const files = await getFileList(`${globals.SCSS_SRC}/*.scss`, { objectMode: true })
 
     for await (const file of files) {
       const scssResult = await sass.compileAsync(file.path, {

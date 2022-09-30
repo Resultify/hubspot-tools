@@ -5,15 +5,16 @@ import { getAccessToken } from '@hubspot/cli-lib/personalAccessKey.js'
 import prompts from 'prompts'
 import chalk from 'chalk'
 import dotenv from 'dotenv'
-import ora from 'ora';
+import ora from 'ora'
+import open from 'open'
+import { addFileData, isFileDir } from '../utils/fs.js'
+import { globals } from '../config/globals.js'
 
-/**
- * @summary portal name
- * @typedef PortalName
- * @type {Object}
- * @property {string} title
- * @property {string} value
- */
+// The Hubspot authentication configuration .env is disabled by default.
+// Will be enabled if the .env file contains the following variables:
+// HUBSPOT_PORTAL_ID=***
+// HUBSPOT_PERSONAL_ACCESS_KEY=***
+let hubSpotDefaultEnvAuthConfig = false
 
 /**
  * @summary Get project local environment variables
@@ -22,15 +23,111 @@ import ora from 'ora';
 const localEnv = dotenv.config()
 
 /**
- * @summary get portal names from project local environment variables
+ * @summary Create/populate .env file
+ * @description Create the .env file if it doesn't exist and add the authentication data template
+ * @since 0.0.1
  * @async
  * @private
- * @param {Object} localEnv - local env variables
- * @returns {Promise<Array>} portal name|names
+ * @returns undefined
+ * @example
+ * await addAuthDataTmplToDotEnv()
  */
-async function getPortalsName (localEnv) {
+async function addAuthDataTmplToDotEnv () {
+  try {
+    if (!await isFileDir(globals.DOTENV)) {
+      await addFileData(globals.DOTENV, globals.DOTENV_DATA_TMPL)
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
+ * @summary Check auth data in .env file
+ * @description Check the credentials in the .env file and show more information if the credentials are incorrect
+ * @since 0.0.1
+ * @async
+ * @private
+ * @returns undefined
+ * @example
+ * await checkAuthDataInDotEnv()
+ */
+async function checkAuthDataInDotEnv () {
+  try {
+    const localEnv = dotenv.config()
+    if (Object.keys(localEnv.parsed).length === 0 || localEnv.parsed?.hub_sandbox === 'personalaccesskey') {
+      await showDotEnvSetupInstructions()
+    }
+    if (Object.keys(localEnv.parsed).length !== 0) {
+      let showInstructions = true
+      for (const key in localEnv.parsed) {
+        if (key.toLowerCase().includes('hub_')) {
+          showInstructions = false
+          break
+        }
+        if (key.includes('HUBSPOT_PERSONAL_ACCESS_KEY') || key.includes('HUBSPOT')) {
+          showInstructions = false
+          hubSpotDefaultEnvAuthConfig = true
+          break
+        }
+      }
+      showInstructions && await showDotEnvSetupInstructions()
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
+ * @summary Show .env data setup instructions
+ * @description Show .env data setup instructions in terminal with possibility to open a link and get personal-access-key
+ * @since 0.0.1
+ * @async
+ * @private
+ * @returns undefined
+ * @example
+ * await showDotEnvSetupInstructions()
+ */
+async function showDotEnvSetupInstructions () {
+  console.log(`Define a ${chalk.cyan('name')} of your Hubspot portal (prefixed by hub_) and add ${chalk.yellow('associated personal access')} key to the ${chalk.green('.env')} file.`)
+  console.log('Example:')
+  console.log('──────────')
+  console.log(`${chalk.yellow('hub_sandbox')}=personal-access-key-value-for-your-sanbox-ifneeded
+${chalk.yellow('hub_project2')}=personal-access-key-value-for-project2-ifneeded
+${chalk.yellow('hub_project3')}=personal-access-key-value-for-project3-ifneeded
+...add mode if needed
+  `)
+  // process.exit(0) when the user cancels/exits the prompt
+  // https://github.com/terkelg/prompts#optionsoncancel
+  const onCancel = async () => {
+    process.exit(0)
+  }
+  const confirm = await prompts(
+    {
+      type: 'confirm',
+      name: 'keyConfirm',
+      message: 'Open the Personal CMS Access Key page in your default browser?',
+      initial: true
+    }, { onCancel }
+  )
+  confirm.keyConfirm && await open('https://app.hubspot.com/l/personal-access-key')
+  console.log(`Run the last command again when you finish configuring the ${chalk.green('.env')} file`)
+  process.exit(0)
+}
+
+/**
+ * @summary get custom portal names
+ * @description get custom (hub_***) portal names from .env file of return empty []
+ * @since 0.0.1
+ * @private
+ * @param {Object} localEnv - local env variables
+ * @returns {{title:string, value:string}[]} portal name|names or empty
+ * @example
+ * getPortalsName()
+ */
+function getPortalsName (localEnv) {
   /**
-   * @type {Array<PortalName>}
+   * @type {{title:string, value:string}[]}
    */
   const portalNames = []
   for (const env in localEnv.parsed) {
@@ -41,81 +138,17 @@ async function getPortalsName (localEnv) {
       })
     }
   }
-  console.log('🚀 ~ file: auth.js ~ line 44 ~ getPortalsName ~ portalNames', portalNames)
   return portalNames
 }
 
 /**
  * @summary save portalNames
- * @type {Array<PortalName>}
+ * @type {Array<{title:string, value:string}>}
  */
-const portalNames = await getPortalsName(localEnv)
+const portalNames = getPortalsName(localEnv)
 
 /**
- * @summary get auth data returned from Hubspot only based on HUBSPOT_PERSONAL_ACCESS_KEY
- * @async
- * @private
- * @param {string} accessKey - HUBSPOT_PERSONAL_ACCESS_KEY
- * @returns {Promise<Object>} auth data
- */
-async function getAuthData (accessKey) {
-  const spinner = ora('Authentication').start();
-  try {
-    const authData = await getAccessToken(accessKey)
-    spinner.succeed()
-    return authData
-  } catch (error) {
-    spinner.fail()
-    console.error(`${chalk.red.bold('[Error]')}`)
-    console.error(error)
-    process.exit(1)
-  }
-}
-
-/**
- * @summary get portalId from authData Object
- * @private
- * @param {Object} authData - auth data
- * @returns {string} portalId
- */
-function getPortalId (authData) {
-  return authData.portalId
-}
-
-/**
- * @summary generate Hubspot auth config based on PERSONAL_ACCESS_KEY and chosen portal name
- * @async
- * @private
- * @param {string} portalName - portal name
- * @param {Object} localEnv - env variables with PERSONAL_ACCESS_KEY
- * @returns {Promise<AUTH_CONFIG>} Hubspot portal auth config
- */
-async function generateAccessConfig (portalName, localEnv) {
-  try {
-    for (const env in localEnv.parsed) {
-      if (env === portalName) {
-        return {
-          portals: [
-            {
-              authType: 'personalaccesskey',
-              portalId: getPortalId(await getAuthData(localEnv.parsed[env])),
-              personalAccessKey: localEnv.parsed[env],
-              env: 'prod'
-            }
-          ]
-        }
-      }
-    }
-
-  } catch(err) {
-    console.error(err)
-  }
-
-
-}
-
-/**
- * @summary prompt to select Portal if more than one with confirmation
+ * @summary prompt to select Portal if more than one name with confirmation
  * @type {Array}
  */
 const selectPortal = [
@@ -129,7 +162,7 @@ const selectPortal = [
   {
     type: 'confirm',
     name: 'firstConfirm',
-    message: (prev, values) => `Continue with ${chalk.cyan.bold(prev)}?`,
+    message: (prev, values) => `Continue with ${chalk.cyan.bold(prev)} HubSpot portal?`,
     initial: true
   },
   {
@@ -142,20 +175,20 @@ const selectPortal = [
   {
     type: (_, values) => values.firstConfirm === false ? 'confirm' : null,
     name: 'secondConfirm',
-    message: (prev, values) => `Continue with ${chalk.cyan.bold(prev)}?`,
+    message: (prev, values) => `Continue with ${chalk.cyan.bold(prev)} HubSpot portal?`,
     initial: true
   }
 ]
 
 /**
- * @summary prompt to confirm Portal if one portal
+ * @summary prompt to confirm Portal if one portal name
  * @type {Array}
  */
 const confirmPortal = [
   {
     type: 'confirm',
     name: 'secondConfirm',
-    message: `Continue with ${chalk.cyan.bold(portalNames[0].value)} HubSpot portal?`,
+    message: `Continue with ${chalk.cyan.bold(portalNames[0]?.value)} HubSpot portal?`,
     initial: true
   }
 ]
@@ -175,54 +208,135 @@ const onCancel = async () => {
 
 /**
  * @summary show prompt with portals and return the selected portal name
+ * @since 0.0.1
  * @async
  * @private
  * @returns {Promise<string>} portal name
+ * @example
+ * await choosePortal()
  */
 async function choosePortal () {
-  if (portalNames.length > 1) {
-    const portal = await prompts(selectPortal, { onSubmit, onCancel })
-    return portal.value
-  } else {
-    await prompts(confirmPortal, { onSubmit, onCancel })
-    return portalNames[0].value
+  if (portalNames.length > 0) {
+    if (portalNames.length > 1) {
+      const portal = await prompts(selectPortal, { onSubmit, onCancel })
+      return portal.value
+    } else {
+      await prompts(confirmPortal, { onSubmit, onCancel })
+      return portalNames[0].value
+    }
   }
 }
 
 /**
- * @summary Nimbly custom Hubspot authentication
- * @description Hubspot CMS auth based on Nimbly custom local .env file with multiple Hub platforms to choose
+ * @summary Get all auth data from Hubspot only based on PERSONAL_ACCESS_KEY
+ * @description Get portalId,accessToken and expiresAt based on PERSONAL_ACCESS_KEY
+ * @since 0.0.1
  * @async
- * @returns {Promise<AUTH_CONFIG|boolean>} Hubspot auth config
+ * @private
+ * @param {string} accessKey - HUBSPOT_PERSONAL_ACCESS_KEY
+ * @returns {Promise<Object>} auth data
  * @example
- * .env ->
- * hub_patformName=personalaccesskey
- * hub_patformName2=personalaccesskey2
+ * await getAuthData()
  */
-async function getCustomAuthConfig () {
-  if (localEnv.parsed.HUBSPOT_PERSONAL_ACCESS_KEY || Object.keys(localEnv.parsed)[0].toLowerCase().includes('HUBSPOT')) {
-    return false
+async function getAuthData (accessKey) {
+  const spinner = ora('Authentication').start()
+  try {
+    const authData = await getAccessToken(accessKey)
+    spinner.succeed()
+    return authData
+  } catch (error) {
+    spinner.fail()
+    console.error(`${chalk.red.bold('[Error]')}`)
+    console.error(error)
+    process.exit(1)
+  }
+}
+
+/**
+ * @summary get portalId from authData Object
+ * @since 0.0.1
+ * @private
+ * @param {Object} authData - auth data
+ * @returns {string} portalId
+ */
+function getPortalId (authData) {
+  return authData.portalId
+}
+
+/**
+ * @summary Generate Hubspot auth config based on PERSONAL_ACCESS_KEY and chosen portal name
+ * @since 0.0.1
+ * @async
+ * @private
+ * @param {string} portalName - portal name
+ * @param {Object} localEnv - env variables with PERSONAL_ACCESS_KEY
+ * @returns {Promise<AUTH_CONFIG>} Hubspot portal auth config
+ * @example
+ * await generateAccessConfig()
+ */
+async function generateAccessConfig (portalName, localEnv) {
+  try {
+    for (const env in localEnv.parsed) {
+      if (env.replace('hub_', '') === portalName) {
+        return {
+          portals: [
+            {
+              authType: 'personalaccesskey',
+              portalId: getPortalId(await getAuthData(localEnv.parsed[env])),
+              personalAccessKey: localEnv.parsed[env],
+              env: 'prod'
+            }
+          ]
+        }
+      }
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
+ * @summary Return custom auth config if it exists
+ * @description Hubspot CMS auth based on Rusultify custom local .env file with multiple Hub platforms to choose
+ * @since 0.0.1
+ * @async
+ * @private
+ * @returns {Promise<AUTH_CONFIG|string>} Custom auth config or defaultConfig string
+ * @example
+ * await isCustomAuthConfig()
+ */
+async function isCustomAuthConfig () {
+  if (hubSpotDefaultEnvAuthConfig) {
+    return 'defaultConfig'
   } else {
     const hubConfig = await generateAccessConfig(await choosePortal(), localEnv)
-    return hubConfig
+    if (hubConfig === undefined) {
+      console.error(`${chalk.bold.red(['Error'])} .env authentication configuration is incorrect`)
+      process.exit(1)
+    } else {
+      return hubConfig
+    }
   }
 }
 
 /**
  * @summary Load and validate Hubspot config
+ * @since 0.0.1
  * @async
- * @prop {AUTH_CONFIG|boolean} customAuthConfig - Nimbly custom Hubspot authentication
+ * @param {AUTH_CONFIG|string} customAuthConfig - Rusultify custom Hubspot authentication
  * @returns {Promise<Object>} Hubspot loaded config
-*/
+ * @example
+ * runFunction()
+ */
 async function loadAuthConfig (customAuthConfig) {
   // load HUBSPOT config based on HUBSPOT_PORTAL_ID and HUBSPOT_PERSONAL_ACCESS_KEY env variables
-  if (!customAuthConfig) {
+  if (customAuthConfig === 'defaultConfig') {
     const hubConfig = await config.getAndLoadConfigIfNeeded({ silenceErrors: false, useEnv: true })
     await config.validateConfig()
     await getAuthData(localEnv.parsed.HUBSPOT_PERSONAL_ACCESS_KEY)
     return hubConfig
 
-  // load HUBSPOT config based on Nimbly custom env variables
+  // load HUBSPOT config based on Rusultify custom env variables
   } else {
     /**
      * fake env variables to run fake loadConfig() function
@@ -240,4 +354,23 @@ async function loadAuthConfig (customAuthConfig) {
   }
 }
 
-export { loadAuthConfig, getCustomAuthConfig }
+/**
+ * @summary add/check/return custom auth config
+ * @since 0.0.1
+ * @async
+ * @returns {Promise<AUTH_CONFIG|string>} Hubspot portal auth config
+ * @example
+ * await getAuthConfig()
+ */
+async function getAuthConfig () {
+  try {
+    await addAuthDataTmplToDotEnv()
+    await checkAuthDataInDotEnv()
+    const authData = isCustomAuthConfig()
+    return authData
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export { loadAuthConfig, getAuthConfig }

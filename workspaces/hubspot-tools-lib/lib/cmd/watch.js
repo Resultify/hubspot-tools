@@ -4,8 +4,9 @@ import { compileScss } from '../compile/sass.js'
 import { compileCss } from '../compile/css.js'
 import { compileJs } from '../compile/js.js'
 import { watchSrc } from '../compile/watch.js'
-import { getCustomAuthConfig } from '../hubspot/auth.js'
+import { getAuthConfig } from '../hubspot/auth.js'
 import { watchHubspotTheme } from '../hubspot/watch.js'
+import { confirmThemeName } from '../hubspot/utils/utils.js'
 import * as utils from '../utils/utils.js'
 checkNode()
 checkPackageThemeConsistent()
@@ -15,21 +16,21 @@ checkPackageThemeConsistent()
  * @since 0.0.1
  * @async
  * @memberof Commands
- * @param {OPTIONS} [opt] - task options
+ * @param {object} [opt] - local theme based config
  * @returns undefined
  * @example
  * node build/watch.js
  */
 async function watch (opt) {
-  await utils.confirmThemeName()
-  const auth = await getCustomAuthConfig()
+  await confirmThemeName()
+  const hubAuth = await getAuthConfig()
   const timeStart = utils.startTaskGroup('Build task')
   await cleanAssets()
   await compileScss()
   await Promise.all([compileCss(), compileJs(opt)])
   utils.endTaskGroup({ taskName: 'Build task', timeStart })
   await watchSrc()
-  await watchHubspotTheme(auth)
+  await watchHubspotTheme(hubAuth)
   console.log('Watching files...')
 }
 

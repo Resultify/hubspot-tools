@@ -1,33 +1,11 @@
 /**
  * @summary Additions common options
  * @description Additional options to use locally in functions
- * @exports LOCAL_OPTIONS
- * @typedef LOCAL_OPTIONS
+ * @exports BUILD_OPTIONS
+ * @typedef BUILD_OPTIONS
  * @type {object}
+ * @property {object} [config] - local theme based config
  * @property {boolean} [hideStatus] - hide task status from showing in console
- * @memberof Types
- */
-
-/**
- * @summary Global config
- * @description Global general config variables
- * @exports GLOBAL_CONFIG
- * @typedef GLOBAL_CONFIG
- * @type {object}
- * @property {Object} [js]
- * @property {Array<string>} [js.external]
- * @property {Object} [js.replace]
- * @property {Object} [js.globals]
- * @memberof Types
- */
-
-/**
- * @summary Options
- * @exports OPTIONS
- * @typedef OPTIONS
- * @type {object}
- * @property {GLOBAL_CONFIG} [config] - Global general config variables
- * @property {LOCAL_OPTIONS} [options] - Additional options to use locally in functions
  * @memberof Types
  */
 
@@ -41,5 +19,17 @@
  * @property {string} portals[].portalId
  * @property {string} portals[].personalAccessKey
  * @property {string} portals[].env
+ * @memberof Types
+ */
+
+/**
+ * @summary File Info
+ * @exports FILE_INFO
+ * @typedef FILE_INFO
+ * @type {object}
+ * @property {string} [name]
+ * @property {string} [path]
+ * @property {string} dist
+ * @property {string} size
  * @memberof Types
  */

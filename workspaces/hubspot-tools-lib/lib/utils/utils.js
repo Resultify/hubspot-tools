@@ -1,8 +1,5 @@
 /** @module lib/utils/utils */
 
-import { globby } from 'globby'
-import { globals } from '../config/globals.js'
-import prompts from 'prompts'
 import chalk from 'chalk'
 
 /**
@@ -24,37 +21,10 @@ function convertFileSize (size) {
 }
 
 /**
- * @summary get file list based on glob pattern
- * @async
- * @param {string} glob
- * @param {Object} options
- * @returns {Promise<Array>} node file list
- */
-async function getFileList (glob, options) {
-  try {
-    const files = await globby(glob, options)
-    if (files !== undefined) {
-      return files
-    }
-  } catch (error) {
-    console.error(`(getFileList ${glob} ${options} ) Error:`, error)
-  }
-}
-
-/**
- * @summary Info about files
- * @typedef FileInfo
- * @type {object}
- * @property {string} [name]
- * @property {string} [path]
- * @property {string} dist
- * @property {string} size
- */
-
-/**
  * @summary parse file info
+ * @since 0.0.1
  * @private
- * @param {Array<FileInfo>} files
+ * @param {Array<FILE_INFO>} files
  * @returns {string} all file info
  */
 function filesStats (files) {
@@ -77,7 +47,7 @@ function filesStats (files) {
  * @summary Start task message
  * @description Show in console start task message with timestamp
  * @since 0.0.1
- * @param {string} taskName - Task name
+ * @param {string} taskName - task name
  * @returns {number} timestamp
  * @example
  * const timeStart = utils.startTask('Compile CSS')
@@ -94,7 +64,7 @@ function startTask (taskName) {
  * @summary end task/tasks options
  * @typedef EndTask
  * @type {object}
- * @property {Array<FileInfo>} [files] - file list
+ * @property {Array<FILE_INFO>} [files] - file list
  * @property {string} taskName
  * @property {number} timeStart
  */
@@ -157,28 +127,4 @@ function endTaskGroup (options) {
   console.log(`\n${chalk.green('●')} DONE\n${msg} ${chalk.grey('finished after')} ${chalk.bold.yellow.underline(`${timeDiff}s`)}\n═══════════════`)
 }
 
-/**
- * @summary show prompt to confirm theme name
- * @since 0.0.1
- * @async
- * @returns undefined
- * @example
- * await confirmThemeName()
- */
-async function confirmThemeName () {
-  // process.exit(0) when the user cancels/exits the prompt
-  // https://github.com/terkelg/prompts#optionsoncancel
-  const onCancel = async () => {
-    process.exit(0)
-  }
-  const confirm = await prompts(
-    {
-      type: 'confirm',
-      name: 'themeConfirm',
-      message: `Continue with ${chalk.cyan.bold(globals.THEME_NAME)} theme?`,
-      initial: true
-    }, { onCancel }
-  )
-}
-
-export { startTask, endTask, startTaskGroup, endTaskGroup, getFileList, convertFileSize, confirmThemeName }
+export { startTask, endTask, startTaskGroup, endTaskGroup, convertFileSize }

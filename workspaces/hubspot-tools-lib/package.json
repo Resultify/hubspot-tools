@@ -22,13 +22,14 @@
     "dotenv": "~16.0.1",
     "globby": "~13.1.2",
     "husky": "~8.0.1",
+    "ora": "~6.1.2",
     "postcss": "~8.4.16",
     "postcss-import": "~15.0.0",
     "prompts": "~2.4.2",
     "rollup": "~2.79.0",
     "rollup-plugin-sizes": "~1.0.4",
     "sass": "~1.55.0",
-    "ora": "~6.1.2"
+    "open": "^8.4.0"
   },
   "devDependencies": {
     "standard": "~17.0.0"
