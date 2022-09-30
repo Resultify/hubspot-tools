@@ -17,7 +17,6 @@
     "test": "standard -v 'lib/**/*.js'"
   },
   "dependencies": {
-    "@resultify/hubspot-tools-lib": "*"
   },
   "devDependencies": {
     "standard": "~17.0.0"
