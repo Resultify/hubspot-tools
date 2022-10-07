@@ -4,7 +4,7 @@ import fsPromises from 'fs/promises'
 import { pathToFileURL } from 'url'
 import sass from 'sass'
 import { globals } from '../config/globals.js'
-import * as utils from '../utils/utils.js'
+import * as utils from '../utils/ui.js'
 import { getFileList } from '../utils/fs.js'
 
 /**

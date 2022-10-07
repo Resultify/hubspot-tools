@@ -5,7 +5,7 @@ import fileMapper from '@hubspot/cli-lib/api/fileMapper.js'
 import logger from '@hubspot/cli-lib/logger.js'
 import chalk from 'chalk'
 import { globals } from '../config/globals.js'
-import * as utils from '../utils/utils.js'
+import * as utils from '../utils/ui.js'
 import { loadAuthConfig } from './auth.js'
 
 let cmsMode = 'publish'

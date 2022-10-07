@@ -2,7 +2,42 @@
 
 import { globby } from 'globby'
 import fsPromises from 'fs/promises'
-import { globals } from '../config/globals.js'
+// import { globals } from '../config/globals.js'
+import dotenv from 'dotenv'
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
+
+async function importJson (path) {
+  if (await isFileDir(path)) {
+    return require(path)
+  } else {
+    return false
+  }
+}
+
+async function importThemeJson () {
+  if (await isFileDir(`${process.cwd()}/theme/theme.json`)) {
+    return require(`${process.cwd()}/theme/theme.json`)
+  } else {
+    return false
+  }
+}
+
+async function importPackageJson () {
+  if (await isFileDir(`${process.cwd()}/package.json`)) {
+    return require(`${process.cwd()}/package.json`)
+  } else {
+    return false
+  }
+}
+
+async function getLocalEnv () {
+  if (await isFileDir(`${process.cwd()}/.env`)) {
+    return dotenv.config()
+  } else {
+    return false
+  }
+}
 
 /**
  * @summary get file list based on glob pattern
@@ -36,7 +71,7 @@ async function getFileList (glob, options) {
  */
 async function isFileDir (path) {
   try {
-    await fsPromises.stat(globals.DOTENV)
+    await fsPromises.stat(path)
     return true
   } catch (error) {
     if (error.code === 'ENOENT') {
@@ -64,4 +99,4 @@ async function addFileData (path, data) {
   }
 }
 
-export { getFileList, addFileData, isFileDir }
+export { getFileList, addFileData, isFileDir, importPackageJson, importThemeJson, importJson, getLocalEnv }

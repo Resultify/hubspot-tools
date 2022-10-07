@@ -4,8 +4,8 @@ import { cleanAssets } from '../compile/clean.js'
 import { compileScss } from '../compile/sass.js'
 import { compileCss } from '../compile/css.js'
 import { compileJs } from '../compile/js.js'
-import { confirmThemeName } from '../hubspot/utils/utils.js'
-import * as utils from '../utils/utils.js'
+import { confirmThemeName } from '../hubspot/helpers.js'
+import * as utils from '../utils/ui.js'
 checkNode()
 checkPackageThemeConsistent()
 

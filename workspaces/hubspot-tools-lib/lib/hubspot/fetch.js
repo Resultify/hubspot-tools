@@ -3,7 +3,7 @@
 import { downloadFileOrFolder } from '@hubspot/cli-lib/fileMapper.js'
 import logger from '@hubspot/cli-lib/logger.js'
 import { globals } from '../config/globals.js'
-import * as utils from '../utils/utils.js'
+import * as utils from '../utils/ui.js'
 import { loadAuthConfig } from './auth.js'
 
 let cmsMode = 'publish'

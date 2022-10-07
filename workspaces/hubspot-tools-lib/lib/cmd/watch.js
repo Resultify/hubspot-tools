@@ -6,8 +6,8 @@ import { compileJs } from '../compile/js.js'
 import { watchSrc } from '../compile/watch.js'
 import { getAuthConfig } from '../hubspot/auth.js'
 import { watchHubspotTheme } from '../hubspot/watch.js'
-import { confirmThemeName } from '../hubspot/utils/utils.js'
-import * as utils from '../utils/utils.js'
+import { confirmThemeName } from '../hubspot/helpers.js'
+import * as utils from '../utils/ui.js'
 checkNode()
 checkPackageThemeConsistent()
 

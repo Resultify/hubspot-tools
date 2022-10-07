@@ -1,6 +1,6 @@
 /** @module lib/hubspot/utils/utils */
 
-import { globals } from '../../config/globals.js'
+import { globals } from '../config/globals.js'
 import prompts from 'prompts'
 import chalk from 'chalk'
 

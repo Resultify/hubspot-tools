@@ -3,7 +3,7 @@
 import { deleteAsync } from 'del'
 import fsPromises from 'fs/promises'
 import { globals } from '../config/globals.js'
-import * as utils from '../utils/utils.js'
+import * as utils from '../utils/ui.js'
 
 /**
  * @summary clean all assets/tmp folders

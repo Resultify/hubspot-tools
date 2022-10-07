@@ -6,7 +6,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
 import sizes from 'rollup-plugin-sizes'
 import { globals } from '../config/globals.js'
-import * as utils from '../utils/utils.js'
+import * as utils from '../utils/ui.js'
 import { getFileList } from '../utils/fs.js'
 
 /**
