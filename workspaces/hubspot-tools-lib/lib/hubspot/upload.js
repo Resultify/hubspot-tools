@@ -15,12 +15,9 @@ if (process.env.MODE === 'draft') {
 
 /**
  * @summary upload all HubSpot theme files
- * @since 0.0.1
  * @async
  * @param {AUTH_CONFIG|string} customAuthConfig - Rusultify custom Hubspot authentication
  * @returns undefined
- * @example
- * await uploadTheme()
  */
 async function uploadTheme (customAuthConfig) {
   try {

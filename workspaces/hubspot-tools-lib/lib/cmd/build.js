@@ -11,7 +11,6 @@ checkPackageThemeConsistent()
 
 /**
  * @summary Build/compile all src CSS/JS/SCSS files
- * @since 0.0.1
  * @async
  * @memberof Commands
  * @prop {object} [opt] - local theme based config

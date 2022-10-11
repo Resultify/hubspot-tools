@@ -13,7 +13,6 @@ checkPackageThemeConsistent()
 
 /**
  * @summary Run watch process with css/js/scss compilation
- * @since 0.0.1
  * @async
  * @memberof Commands
  * @param {object} [opt] - local theme based config

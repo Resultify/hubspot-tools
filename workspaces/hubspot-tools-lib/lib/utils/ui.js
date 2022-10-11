@@ -4,7 +4,6 @@ import chalk from 'chalk'
 
 /**
  * @summary convert file size B -> kB/MB
- * @since 0.0.1
  * @param {number} size - env variables
  * @returns {string} file size B/kB/MB
  * @example
@@ -22,7 +21,6 @@ function convertFileSize (size) {
 
 /**
  * @summary parse file info
- * @since 0.0.1
  * @private
  * @param {Array<FILE_INFO>} files
  * @returns {string} all file info
@@ -46,7 +44,6 @@ function filesStats (files) {
 /**
  * @summary Start task message
  * @description Show in console start task message with timestamp
- * @since 0.0.1
  * @param {string} taskName - task name
  * @returns {number} timestamp
  * @example
@@ -72,7 +69,6 @@ function startTask (taskName) {
 /**
  * @summary End task console message
  * @description End task console message with date, title, time and filelist if present
- * @since 0.0.1
  * @param {EndTask} options - EndTask options
  * @returns undefined
  * @example
@@ -96,7 +92,6 @@ function endTask (options) {
 /**
  * @summary Start task group message
  * @description Show in console start task group message with timestamp
- * @since 0.0.1
  * @param {string} taskName - Task name
  * @returns {number} timestart timestamp
  * @example
@@ -112,7 +107,6 @@ function startTaskGroup (taskName) {
 /**
  * @summary End group of tasks info
  * @description End group of tasks console message with date, title and time
- * @since 0.0.1
  * @param {EndTask} options - End task options
  * @returns undefined
  * @example

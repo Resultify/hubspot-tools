@@ -9,12 +9,9 @@ import { getFileList } from '../utils/fs.js'
 
 /**
  * @summary Compile Scss task
- * @since 0.0.1
  * @async
  * @param {BUILD_OPTIONS} [opt] - options
  * @returns undefined
- * @example
- * await compileScss()
  */
 async function compileScss (opt) {
   const hideStatus = opt?.hideStatus

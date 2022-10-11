@@ -7,11 +7,8 @@ import * as utils from '../utils/ui.js'
 
 /**
  * @summary clean all assets/tmp folders
- * @since 0.0.1
  * @async
  * @returns undefined
- * @example
- * await cleanAssets()
  */
 async function cleanAssets () {
   try {

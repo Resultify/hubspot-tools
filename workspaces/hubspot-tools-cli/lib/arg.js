@@ -1,6 +1,10 @@
 import arg from 'arg'
 import { customError } from '@resultify/hubspot-tools-lib/lib/utils/error.js'
 
+/**
+ * @summary parse cli args
+ * @returns {Object} cli args
+ */
 function parseArgs () {
   try {
     const args = arg({
@@ -23,7 +27,11 @@ function parseArgs () {
   }
 }
 
-// More than one non-flag argument
+/**
+ * @summary check if more than one non-flag argument
+ * @returns undefined
+ * @throws customError
+ */
 function checkIfMoreThanOneArg (args) {
   if (args._.length > 1) {
     customError('More than one non-flag argument')

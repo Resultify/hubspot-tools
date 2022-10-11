@@ -3,6 +3,13 @@ import gitUrlParse from 'git-url-parse'
 
 const git = simpleGit()
 
+/**
+ * @summary Check is Git Repo
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, boolean>>}
+ */
 async function isGitRepo () {
   try {
     const isGitRepo = await git.checkIsRepo()
@@ -12,6 +19,13 @@ async function isGitRepo () {
   }
 }
 
+/**
+ * @summary Check is Git root
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, boolean>>}
+ */
 async function isGitRoot () {
   try {
     // @ts-ignore
@@ -22,6 +36,13 @@ async function isGitRoot () {
   }
 }
 
+/**
+ * @summary Check is Git commits
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, boolean>>}
+ */
 async function isGitCommits () {
   try {
     const isGitCommits = await git.revparse(['--all'])
@@ -35,6 +56,13 @@ async function isGitCommits () {
   }
 }
 
+/**
+ * @summary Check is Git Staged Files
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, boolean>>}
+ */
 async function isGitStagedFiles () {
   try {
     const isGitStagedFiles = await git.status()
@@ -48,6 +76,13 @@ async function isGitStagedFiles () {
   }
 }
 
+/**
+ * @summary Check is Git changed files
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, boolean>>}
+ */
 async function isGitChangedFiles () {
   try {
     const gitStatus = await git.status()
@@ -61,6 +96,13 @@ async function isGitChangedFiles () {
   }
 }
 
+/**
+ * @summary Check is Git Remote
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, boolean>>}
+ */
 async function isGitRemote () {
   try {
     const gitRemote = await git.getRemotes()
@@ -74,6 +116,13 @@ async function isGitRemote () {
   }
 }
 
+/**
+ * @summary save git origin remote info
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object>}
+ */
 async function gitRemoteOrigin () {
   try {
     const gitRemoteOriginUrl = await (await git.remote(['get-url', 'origin']))
@@ -100,6 +149,13 @@ async function gitRemoteOrigin () {
   }
 }
 
+/**
+ * @summary Check is Git branch detached
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, boolean>>} portal name|names
+ */
 async function isGitBranchDetached () {
   try {
     const gitStatus = await git.status()
@@ -109,6 +165,13 @@ async function isGitBranchDetached () {
   }
 }
 
+/**
+ * @summary Save git branch
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, string>>} portal name|names
+ */
 async function gitBranchUpstream () {
   try {
     const gitStatus = await git.status()
@@ -122,6 +185,13 @@ async function gitBranchUpstream () {
   }
 }
 
+/**
+ * @summary Check is Git tag in current commit
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, boolean>>} portal name|names
+ */
 async function isTagInCurrentCommit () {
   try {
     const isTagInCurrentCommit = await git.tag(['--contains'])
@@ -135,6 +205,13 @@ async function isTagInCurrentCommit () {
   }
 }
 
+/**
+ * @summary Check is Git branch ahead
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, boolean>>} portal name|names
+ */
 async function isGitBrancAhead () {
   try {
     const gitStatus = await git.status()
@@ -148,6 +225,13 @@ async function isGitBrancAhead () {
   }
 }
 
+/**
+ * @summary Check is Git behind
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, boolean>>} portal name|names
+ */
 async function isGitBranchBehind () {
   try {
     const gitStatus = await git.status()
@@ -161,6 +245,13 @@ async function isGitBranchBehind () {
   }
 }
 
+/**
+ * @summary Check is Git tags
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, boolean>>} portal name|names
+ */
 async function isGitTags () {
   try {
     const gitTags = await git.tags()
@@ -173,6 +264,14 @@ async function isGitTags () {
     console.error(error)
   }
 }
+
+/**
+ * @summary save last git tag
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, string>>} portal name|names
+ */
 async function gitLastTag () {
   try {
     const gitTags = await git.tags()
@@ -186,6 +285,13 @@ async function gitLastTag () {
   }
 }
 
+/**
+ * @summary save git branch
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, string>>} portal name|names
+ */
 async function gitBranch () {
   try {
     const gitBranch = await git.branch()
@@ -199,6 +305,13 @@ async function gitBranch () {
   }
 }
 
+/**
+ * @summary save git hash
+ * @async
+ * @private
+ * @memberof GIT
+ * @returns {Promise<Object<string, string>>} portal name|names
+ */
 async function gitHash () {
   try {
     const gitHash = await git.revparse(['--short', 'HEAD'])
@@ -212,6 +325,13 @@ async function gitHash () {
   }
 }
 
+/**
+ * @summary Genereta git info
+ * @async
+ * @memberof GIT
+ * @param {Object} data - cli data
+ * @returns {Promise<Object>}
+ */
 async function gitInfo (data) {
   try {
     data.git = { ...data.git, ...await isGitRepo() }

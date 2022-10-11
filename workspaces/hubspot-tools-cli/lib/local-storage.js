@@ -1,6 +1,25 @@
 import { execa } from 'execa'
 import { importPackageJson, importThemeJson } from '@resultify/hubspot-tools-lib/lib/utils/fs.js'
 
+/**
+ * @summary data locals torage
+ * @typedef LOCAL_STORAGE
+ * @type {object}
+ * @property {object} git
+ * @property {object} package
+ * @property {object} theme
+ * @property {object} github
+ * @property {object} prompts
+ * @property {object} system
+ * @property {object} tmp
+ */
+
+/**
+ * @summary CLI data localstorage
+ * @description Save all data needed for a program and make it accessible through all functions
+ * @async
+ * @returns {Promise<LOCAL_STORAGE>} portal name|names
+ */
 async function localstorage () {
   return {
     git: {

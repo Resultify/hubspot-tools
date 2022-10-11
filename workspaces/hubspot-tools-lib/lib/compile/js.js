@@ -11,12 +11,9 @@ import { getFileList } from '../utils/fs.js'
 
 /**
  * @summary Compile Js task
- * @since 0.0.1
  * @async
  * @param {BUILD_OPTIONS} [opt] - task options
  * @returns undefined
- * @example
- * await compileJs()
  */
 async function compileJs (opt) {
   try {

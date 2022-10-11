@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@hubspot/cli-lib": "~4.0.1",
-    "@rollup/plugin-node-resolve": "~14.1.0",
-    "@rollup/plugin-replace": "~4.0.0",
-    "chalk": "~5.0.1",
+    "@rollup/plugin-node-resolve": "~15.0.0",
+    "@rollup/plugin-replace": "~5.0.0",
+    "chalk": "~5.1.0",
     "chokidar": "~3.5.3",
     "del": "~7.0.0",
     "dotenv": "~16.0.1",
@@ -28,7 +28,10 @@
     "rollup": "~2.79.0",
     "rollup-plugin-sizes": "~1.0.4",
     "sass": "~1.55.0",
-    "open": "^8.4.0"
+    "open": "^8.4.0",
+    "simple-git": "^3.14.1",
+    "execa": "^6.1.0",
+    "git-url-parse": "^13.1.0"
   },
   "devDependencies": {
     "standard": "~17.0.0"

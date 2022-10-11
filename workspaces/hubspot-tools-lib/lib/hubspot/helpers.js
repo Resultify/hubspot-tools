@@ -6,11 +6,8 @@ import chalk from 'chalk'
 
 /**
  * @summary show prompt to confirm theme name
- * @since 0.0.1
  * @async
  * @returns undefined
- * @example
- * await confirmThemeName()
  */
 async function confirmThemeName () {
   // process.exit(0) when the user cancels/exits the prompt

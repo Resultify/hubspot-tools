@@ -1,6 +1,14 @@
 import { execa } from 'execa'
 import chalk from 'chalk'
 
+/**
+ * @summary Show custom shell cmd error msg
+ * @memberof SHELL
+ * @param {string} [msg] - custom msg
+ * @param {Object} [error] - error obj
+ * @returns undefined
+ * @throws error
+ */
 function customExecError (msg, error) {
   const internalMsg = error.stderr ? error.stderr : error.stdout
   console.error(`${chalk.bold.red('Error:')} ${internalMsg}`)
@@ -13,6 +21,13 @@ function customExecError (msg, error) {
   process.exit(1)
 }
 
+/**
+ * @summary check if ssh added to ssh-agent (macOS)
+ * @async
+ * @memberof SHELL
+ * @returns undefined
+ * @throws error
+ */
 async function checkIfSsh () {
   try {
     await execa('ssh-add', ['-L'])
@@ -25,6 +40,14 @@ async function checkIfSsh () {
   }
 }
 
+/**
+ * @summary Check if shell bin exists
+ * @async
+ * @memberof SHELL
+ * @param {string} bin - env variables
+ * @returns undefined
+ * @throws error
+ */
 async function checkIfBinExists (bin) {
   try {
     await execa('which', [bin])

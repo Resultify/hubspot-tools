@@ -14,7 +14,6 @@ checkPackageThemeConsistent()
 
 /**
  * @summary Upload theme to HUBSPOT cms portall
- * @since 0.0.1
  * @async
  * @memberof Commands
  * @param {object} [opt] - local theme based config

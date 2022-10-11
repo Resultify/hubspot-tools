@@ -1,5 +1,3 @@
-// import { createRequire } from 'module'
-// const require = createRequire(import.meta.url)
 import { importThemeJson } from '../utils/fs.js'
 
 /**
@@ -40,7 +38,7 @@ globals.SRC = `${globals.ROOT_PATH}/src`
 globals.TMP = `${globals.SRC}/tmp`
 globals.THEME = `${globals.ROOT_PATH}/theme`
 globals.THEME_ASSETS = `${globals.ROOT_PATH}/theme/assets`
-globals.THEME_NAME = await importThemeJson().label
+globals.THEME_NAME = await (await importThemeJson()).label
 
 // CSS compilation variables
 globals.CSS_SRC = `${globals.SRC}/css`

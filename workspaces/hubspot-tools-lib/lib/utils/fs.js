@@ -41,13 +41,10 @@ async function getLocalEnv () {
 
 /**
  * @summary get file list based on glob pattern
- * @since 0.0.1
  * @async
  * @param {string} glob - glob pattern
  * @param {Object} options - options
  * @returns {Promise<Array>} node file list
- * @example
- * await getFileList()
  */
 async function getFileList (glob, options) {
   try {
@@ -62,12 +59,9 @@ async function getFileList (glob, options) {
 
 /**
  * @summary check if file/dir exists
- * @since 0.0.1
  * @async
  * @param {string} path - file/dir path
  * @returns {Promise<boolean>}
- * @example
- * await isFileDir()
  */
 async function isFileDir (path) {
   try {
@@ -83,13 +77,10 @@ async function isFileDir (path) {
 
 /**
  * @summary Append data to file
- * @since 0.0.1
  * @async
  * @param {string} path - file/dir path
  * @param {string} data - data info
  * @returns undefined
- * @example
- * await addFileData()
  */
 async function addFileData (path, data) {
   try {

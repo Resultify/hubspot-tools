@@ -8,7 +8,6 @@ const require = createRequire(import.meta.url)
 /**
  * @summary Check node version
  * @description Will throw an error if node version is wrong
- * @since 0.0.1
  * @returns undefined
  * @throws console.error & process.exit(1) if node version is wrong
  * @example
@@ -26,7 +25,6 @@ function checkNode () {
 /**
  * @summary Check package.json name and theme.json label
  * @description Will throw an error if package.json[name] != theme.json[label]
- * @since 0.0.1
  * @returns undefined
  * @throws console.error & process.exit(1) if package.json[name] != theme.json[label]
  * @example

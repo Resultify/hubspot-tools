@@ -9,11 +9,8 @@ import { globals } from '../config/globals.js'
 
 /**
  * @summary Watch task
- * @since 0.0.1
  * @async
  * @returns undefined
- * @example
- * await watchSrc()
  */
 async function watchSrc () {
   try {

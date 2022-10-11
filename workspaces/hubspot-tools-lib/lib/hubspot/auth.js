@@ -25,12 +25,9 @@ const localEnv = dotenv.config()
 /**
  * @summary Create/populate .env file
  * @description Create the .env file if it doesn't exist and add the authentication data template
- * @since 0.0.1
  * @async
  * @private
  * @returns undefined
- * @example
- * await addAuthDataTmplToDotEnv()
  */
 async function addAuthDataTmplToDotEnv () {
   try {
@@ -45,12 +42,9 @@ async function addAuthDataTmplToDotEnv () {
 /**
  * @summary Check auth data in .env file
  * @description Check the credentials in the .env file and show more information if the credentials are incorrect
- * @since 0.0.1
  * @async
  * @private
  * @returns undefined
- * @example
- * await checkAuthDataInDotEnv()
  */
 async function checkAuthDataInDotEnv () {
   try {
@@ -81,12 +75,9 @@ async function checkAuthDataInDotEnv () {
 /**
  * @summary Show .env data setup instructions
  * @description Show .env data setup instructions in terminal with possibility to open a link and get personal-access-key
- * @since 0.0.1
  * @async
  * @private
  * @returns undefined
- * @example
- * await showDotEnvSetupInstructions()
  */
 async function showDotEnvSetupInstructions () {
   console.log(`Define a ${chalk.cyan('name')} of your Hubspot portal (prefixed by hub_) and add ${chalk.yellow('associated personal access')} key to the ${chalk.green('.env')} file.`)
@@ -118,12 +109,9 @@ ${chalk.yellow('hub_project3')}=personal-access-key-value-for-project3-ifneeded
 /**
  * @summary get custom portal names
  * @description get custom (hub_***) portal names from .env file of return empty []
- * @since 0.0.1
  * @private
  * @param {Object} localEnv - local env variables
  * @returns {{title:string, value:string}[]} portal name|names or empty
- * @example
- * getPortalsName()
  */
 function getPortalsName (localEnv) {
   /**
@@ -208,12 +196,9 @@ const onCancel = async () => {
 
 /**
  * @summary show prompt with portals and return the selected portal name
- * @since 0.0.1
  * @async
  * @private
  * @returns {Promise<string>} portal name
- * @example
- * await choosePortal()
  */
 async function choosePortal () {
   if (portalNames.length > 0) {
@@ -230,13 +215,10 @@ async function choosePortal () {
 /**
  * @summary Get all auth data from Hubspot only based on PERSONAL_ACCESS_KEY
  * @description Get portalId,accessToken and expiresAt based on PERSONAL_ACCESS_KEY
- * @since 0.0.1
  * @async
  * @private
  * @param {string} accessKey - HUBSPOT_PERSONAL_ACCESS_KEY
  * @returns {Promise<Object>} auth data
- * @example
- * await getAuthData()
  */
 async function getAuthData (accessKey) {
   const spinner = ora('Authentication').start()
@@ -254,7 +236,6 @@ async function getAuthData (accessKey) {
 
 /**
  * @summary get portalId from authData Object
- * @since 0.0.1
  * @private
  * @param {Object} authData - auth data
  * @returns {string} portalId
@@ -265,14 +246,11 @@ function getPortalId (authData) {
 
 /**
  * @summary Generate Hubspot auth config based on PERSONAL_ACCESS_KEY and chosen portal name
- * @since 0.0.1
  * @async
  * @private
  * @param {string} portalName - portal name
  * @param {Object} localEnv - env variables with PERSONAL_ACCESS_KEY
  * @returns {Promise<AUTH_CONFIG>} Hubspot portal auth config
- * @example
- * await generateAccessConfig()
  */
 async function generateAccessConfig (portalName, localEnv) {
   try {
@@ -298,12 +276,9 @@ async function generateAccessConfig (portalName, localEnv) {
 /**
  * @summary Return custom auth config if it exists
  * @description Hubspot CMS auth based on Rusultify custom local .env file with multiple Hub platforms to choose
- * @since 0.0.1
  * @async
  * @private
  * @returns {Promise<AUTH_CONFIG|string>} Custom auth config or defaultConfig string
- * @example
- * await isCustomAuthConfig()
  */
 async function isCustomAuthConfig () {
   if (hubSpotDefaultEnvAuthConfig) {
@@ -321,12 +296,9 @@ async function isCustomAuthConfig () {
 
 /**
  * @summary Load and validate Hubspot config
- * @since 0.0.1
  * @async
  * @param {AUTH_CONFIG|string} customAuthConfig - Rusultify custom Hubspot authentication
  * @returns {Promise<Object>} Hubspot loaded config
- * @example
- * runFunction()
  */
 async function loadAuthConfig (customAuthConfig) {
   // load HUBSPOT config based on HUBSPOT_PORTAL_ID and HUBSPOT_PERSONAL_ACCESS_KEY env variables
@@ -356,11 +328,8 @@ async function loadAuthConfig (customAuthConfig) {
 
 /**
  * @summary add/check/return custom auth config
- * @since 0.0.1
  * @async
  * @returns {Promise<AUTH_CONFIG|string>} Hubspot portal auth config
- * @example
- * await getAuthConfig()
  */
 async function getAuthConfig () {
   try {

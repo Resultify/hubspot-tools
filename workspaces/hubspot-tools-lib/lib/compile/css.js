@@ -9,12 +9,9 @@ import { getFileList } from '../utils/fs.js'
 
 /**
  * @summary Compile Css
- * @since 0.0.1
  * @async
  * @param {BUILD_OPTIONS} [opt] - options
  * @returns undefined
- * @example
- * await compileCss()
  */
 async function compileCss (opt) {
   try {

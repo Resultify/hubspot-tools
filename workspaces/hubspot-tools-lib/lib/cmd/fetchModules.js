@@ -9,7 +9,6 @@ checkPackageThemeConsistent()
 
 /**
  * @summary Fetch Modules from HUBSPOT cms portall
- * @since 0.0.1
  * @async
  * @memberof Commands
  * @returns undefined
