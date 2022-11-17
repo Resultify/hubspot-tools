@@ -1,1 +1,0 @@
-# Resultify HubSpot tools lib
