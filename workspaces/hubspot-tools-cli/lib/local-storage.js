@@ -1,5 +1,35 @@
 import { execa } from 'execa'
-import { importPackageJson, importThemeJson } from '@resultify/hubspot-tools-lib/lib/utils/fs.js'
+import { isFileDir } from '@resultify/hubspot-tools-theme-lib/lib/utils/fs.js'
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
+
+/**
+ * @summary Import theme.json
+ * @async
+ * @private
+ * @returns {Promise<Object|boolean>} theme.json|false
+ */
+async function importThemeJson () {
+  if (await isFileDir(`${process.cwd()}/theme/theme.json`)) {
+    return require(`${process.cwd()}/theme/theme.json`)
+  } else {
+    return false
+  }
+}
+
+/**
+ * @summary Import package.json
+ * @async
+ * @private
+ * @returns {Promise<Object|boolean>} package.json|false
+ */
+async function importPackageJson () {
+  if (await isFileDir(`${process.cwd()}/package.json`)) {
+    return require(`${process.cwd()}/package.json`)
+  } else {
+    return false
+  }
+}
 
 /**
  * @summary data locals torage

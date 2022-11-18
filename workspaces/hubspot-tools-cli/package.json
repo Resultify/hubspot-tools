@@ -1,10 +1,21 @@
 {
   "name": "@resultify/hubspot-tools-cli",
   "version": "0.0.1",
-  "description": "",
-  "repository": {},
-  "keywords": [],
-  "license": "MIT",
+  "description": "Resultify HubSpot tools CLI",
+  "keywords": [
+    "hubspot",
+    "resultify",
+    "hubspot tools",
+    "cli",
+    "hubspot theme",
+    "hubspot cms"
+  ],
+  "homepage": "https://github.com/Resultify/hubspot-tools/tree/master/workspaces/hubspot-tools-cli#readme",
+  "bugs": {
+    "url": "https://github.com/Resultify/hubspot-tools/issues"
+  },
+  "license" : "MIT",
+  "author": "Resultify",
   "files": [
     "bin/",
     "lib/"
@@ -12,19 +23,23 @@
   "bin": {
     "rh": "./bin/rh-cli.js"
   },
-  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Resultify/hubspot-tools.git",
+    "directory": "workspaces/hubspot-tools-cli"
+  },
   "scripts": {
     "test": "standard -v 'lib/**/*.js'"
   },
   "dependencies": {
-    "@resultify/hubspot-tools-lib": "^0.0.1",
-    "arg": "^5.0.2"
+    "@resultify/hubspot-tools-theme-lib": "~0.0.1",
+    "arg": "~5.0.2",
+    "simple-git": "~3.15.0",
+    "execa": "~6.1.0",
+    "git-url-parse": "~13.1.0"
   },
-  "devDependencies": {
-    "standard": "~17.0.0"
+  "publishConfig": {
+    "access": "public"
   },
-  "engines": {
-    "node": ">=16.13.0",
-    "npm": ">=8.1.0"
-  }
+  "type": "module"
 }

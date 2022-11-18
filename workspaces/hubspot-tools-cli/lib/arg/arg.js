@@ -1,5 +1,5 @@
 import arg from 'arg'
-import { customError } from '@resultify/hubspot-tools-lib/lib/utils/error.js'
+import { customError } from '../utils/error.js'
 
 /**
  * @summary parse cli args

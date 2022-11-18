@@ -1,10 +1,10 @@
-import { checkNode } from '@resultify/hubspot-tools-lib/lib/check.js'
-import { parseArgs, checkIfMoreThanOneArg } from './arg.js'
+import { checkNode } from '@resultify/hubspot-tools-theme-lib/lib/utils/check.js'
+import { parseArgs, checkIfMoreThanOneArg } from './arg/arg.js'
 import { localstorage } from './local-storage.js'
 import { showInfo as info } from './cmd/info.js'
-import { showDebugInfo } from './debug.js'
-import { gitInfo } from '@resultify/hubspot-tools-lib/lib/git.js'
-import { checkIfSsh, checkIfBinExists } from '@resultify/hubspot-tools-lib/lib/shell.js'
+import { showDebugInfo } from './arg/debug.js'
+import { gitInfo } from './git/git.js'
+import { checkIfSsh, checkIfBinExists } from './shell/shell.js'
 
 await checkIfSsh()
 await checkIfBinExists('git')

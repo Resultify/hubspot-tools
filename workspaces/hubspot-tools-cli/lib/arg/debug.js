@@ -1,5 +1,20 @@
 import chalk from 'chalk'
-import { getLocalEnv } from '@resultify/hubspot-tools-lib/lib/utils/fs.js'
+import dotenv from 'dotenv'
+import { isFileDir } from '@resultify/hubspot-tools-theme-lib/lib/utils/fs.js'
+
+/**
+ * @summary Get .env config
+ * @async
+ * @private
+ * @returns {Promise<Object|boolean>} .env|false
+ */
+async function getLocalEnv () {
+  if (await isFileDir(`${process.cwd()}/.env`)) {
+    return dotenv.config()
+  } else {
+    return false
+  }
+}
 
 /**
  * @summary Show debug info with --debug flag

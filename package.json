@@ -1,13 +1,27 @@
 {
   "name": "hubspot-tools",
-  "version": "0.0.1",
-  "description": "Hubspot tools",
-  "workspaces": [
-    "workspaces/*"
+  "description": "Resultify HubSpot tools",
+  "keywords": [
+    "hubspot",
+    "resultify",
+    "hubspot tools",
+    "cli",
+    "hubspot theme",
+    "hubspot cms"
   ],
+  "homepage": "https://github.com/Resultify/hubspot-tools#readme",
+  "bugs": {
+    "url": "https://github.com/Resultify/hubspot-tools/issues"
+  },
+  "license" : "MIT",
+  "author": "Resultify",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Resultify/hubspot-tools.git"
+  },
   "scripts": {
     "prepare": "husky install",
-    "test": "npm run test -ws"
+    "test": "npm run test -ws --if-present"
   },
   "devDependencies": {
     "husky": "^8.0.1",
@@ -15,8 +29,10 @@
   },
   "engines": {
     "node": ">=16.13.0",
-    "npm": ">=8.1.0"
+    "npm": ">=8.19.3"
   },
-  "dependencies": {
-  }
+  "private": true,
+  "workspaces": [
+    "workspaces/*"
+  ]
 }
