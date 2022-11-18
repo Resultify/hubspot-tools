@@ -1,5 +1,5 @@
 
-import { checkNode, checkPackageThemeConsistent } from '../check.js'
+import { checkNode, checkPackageThemeConsistent } from '../utils/check.js'
 import { cleanAssets } from '../compile/clean.js'
 import { compileScss } from '../compile/sass.js'
 import { compileCss } from '../compile/css.js'

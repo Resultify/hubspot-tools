@@ -4,7 +4,6 @@ import fsPromises from 'fs/promises'
 import { rollup } from 'rollup'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
-import sizes from 'rollup-plugin-sizes'
 import { globals } from '../config/globals.js'
 import * as utils from '../utils/ui.js'
 import { getFileList } from '../utils/fs.js'
@@ -40,7 +39,6 @@ async function compileJs (opt) {
           replace(replaceVal)
         ]
       }
-      hideStatus || inputOptions.plugins.push(sizes())
       inputOptions.external = [...inputOptions.external, ...opt.config.js.external]
 
       const outputOptions = {

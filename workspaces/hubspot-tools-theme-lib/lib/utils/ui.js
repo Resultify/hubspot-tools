@@ -3,6 +3,16 @@
 import chalk from 'chalk'
 
 /**
+ * @summary File Info
+ * @typedef THEME_FILE_INFO
+ * @type {object}
+ * @property {string} [name]
+ * @property {string} [path]
+ * @property {string} dist
+ * @property {string} size
+ */
+
+/**
  * @summary convert file size B -> kB/MB
  * @param {number} size - env variables
  * @returns {string} file size B/kB/MB
@@ -22,7 +32,7 @@ function convertFileSize (size) {
 /**
  * @summary parse file info
  * @private
- * @param {Array<FILE_INFO>} files
+ * @param {Array<THEME_FILE_INFO>} files
  * @returns {string} all file info
  */
 function filesStats (files) {
@@ -56,16 +66,6 @@ function startTask (taskName) {
   )
   return timeStart
 }
-
-/**
- * @summary File Info
- * @typedef THEME_FILE_INFO
- * @type {object}
- * @property {string} [name]
- * @property {string} [path]
- * @property {string} dist
- * @property {string} size
- */
 
 /**
  * @summary end task/tasks options

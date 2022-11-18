@@ -1,4 +1,4 @@
-import { checkNode, checkPackageThemeConsistent } from '../check.js'
+import { checkNode, checkPackageThemeConsistent } from '../utils/check.js'
 import { fetchModules } from '../hubspot/fetch.js'
 import { globals } from '../config/globals.js'
 import { getAuthConfig } from '../hubspot/auth.js'
